@@ -1,0 +1,52 @@
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Calculated Measures:
+_Max streams = MAX('Spotify Dataset'[streams])
+_Top Song Streams = CALCULATE(SUM('Spotify Dataset'[streams]),'Spotify Dataset'[streams] = MAX('Spotify Dataset'[streams]))
+_Average Streams per  Year = CALCULATE(AVERAGE([streams]),ALLEXCEPT('Spotify Dataset','Date'[Year]))_Top Song vs Avg Val = DIVIDE([_Top Song Streams]-[_Average Streams per Year],[_Average Streams per Year])
+_Top Song vs Avg = VAR x = [_Top Song vs Avg Val] RETURN IF(x>0,FORMAT(x, "#.0%") & " " & UNICHAR(9650),FORMAT(x, "#.0%") & " " & UNICHAR(9660))
+_Image html = 
+Var x =
+CALCULATE(
+MAX('Spotify Dataset'[cover_url]),
+'Spotify Dataset'[streams] = MAX('Spotify Dataset'[streams])
+)
+return
+
+"
+<!DOCTYPE html}
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>Image Cropping</title>
+    <style>
+        .image-container {
+        width: 1029px; /* Width of the container */
+        height: 354px; /* Height of the container */
+        overflow: hidden; /* Hide parts of the image that don't fit */
+        border-radius: 25px; /* Rounded corners */
+        position: relative; /* Relative positioning for the child element */
+        }
+
+        .image {
+        object-fit: cover; /* Cover the entire container */
+        object-position: center; /* Center the image */
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        }
+    </style>
+</head>
+<body>
+    <div class='image-container'>
+        <img src='"&x&"' alt='Album Cover' class='image'>
+    </div>
+</body>
+</html>
+"
+Unit Chart:
+_Percent_Val = AVERAGE([energy_%])
+Heat Map:
+_Track = COUNT('Spotify Dataset'[track_name])
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Calculated Columns:
+Date = DATE([released_year],[released_month],[released_day])
